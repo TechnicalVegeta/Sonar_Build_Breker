@@ -3,8 +3,6 @@ on: [push]
 jobs:
   sonarqube:
     runs-on: ubuntu-latest
-    env:
-      SONAR_TOKEN: ${{ steps.run-script.outputs.sonar_token }}
 
     steps:
       - uses: actions/checkout@v2
