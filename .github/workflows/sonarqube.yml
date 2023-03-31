@@ -3,6 +3,8 @@ on: [push]
 jobs:
   sonarqube:
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ steps.run-script.outputs.sonar_token }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -25,6 +27,7 @@ jobs:
         run: |
           set -x
           bash .github/scripts/run_sonarqube.sh
+          echo "::set-output name=sonar_token::$USER_TOKEN"
         id: run-script
 
       - name: Set up SonarQube Scanner
@@ -33,7 +36,7 @@ jobs:
           projectBaseDir: ./my-app
           args: >
             -Dsonar.host.url=http://localhost:9000
-            -Dsonar.login=${{ steps.run-script.outputs.sonar_token }}
+            -Dsonar.login=$SONAR_TOKEN
 
       - name: Run SonarQube scan
         run: sonar-scanner
