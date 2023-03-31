@@ -25,7 +25,6 @@ jobs:
         run: |
           set -x
           bash .github/scripts/run_sonarqube.sh
-          echo "sonar_token=$USER_TOKEN" >> $GITHUB_OUTPUT
         id: run-script
 
       - name: Set up SonarQube Scanner
