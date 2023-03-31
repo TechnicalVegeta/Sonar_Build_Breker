@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SONAR_TOKEN: ${{ steps.run-script.outputs.sonar_token }}
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -34,9 +35,11 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         with:
           projectBaseDir: ./my-app
-          args: >
-            -Dsonar.host.url=http://localhost:9000
-            -Dsonar.login=$SONAR_TOKEN
 
       - name: Run SonarQube scan
-        run: sonar-scanner
+        env:
+          SONAR_TOKEN: ${{ steps.run-script.outputs.sonar_token }}
+        run: |
+          sonar-scanner \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.login=$SONAR_TOKEN
