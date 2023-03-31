@@ -1,0 +1,30 @@
+on: [push]
+
+jobs:
+  SonarBuildBreaker:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    name: SonarBuildBreaker
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v3
+
+      - name: Sonar Branch Validation
+        run: |
+          # Sonar
+          cd  $GITHUB_WORKSPACE
+          echo "
+          sonar.branch.name=${{github.ref_name}}
+          "
+        shell: bash
+
+      - name: Sonar Build Breaker
+        uses: ./
+        id: buildbreaker
+        with:
+          sonar_url: ${{ secrets.SONAR_HOST_URL }}
+          sonar_branch: ${{github.ref_name}}
+          sonar_token: ${{ secrets.SONAR_TOKEN }}
+          project_key: "sonar_project_key"
