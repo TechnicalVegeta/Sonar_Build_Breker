@@ -24,7 +24,7 @@ jobs:
 
       - name: Run SonarQube script
         run: |
-          set -x
+          chmod +x .github/scripts/run_sonarqube.sh
           TOKEN=$(.github/scripts/run_sonarqube.sh)
           echo $TOKEN
           sonar_token=$(echo "TOKEN" | tail -n 1)
