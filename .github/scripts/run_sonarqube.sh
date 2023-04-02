@@ -35,4 +35,4 @@ echo "Project key: $PROJECT_KEY"
 TOKEN_NAME="mytoken"
 USER_TOKEN=$(curl -u $SONARQUBE_USERNAME:$SONARQUBE_PASSWORD -X POST "http://localhost:9000/api/user_tokens/generate?name=$TOKEN_NAME" | jq -r '.token')
 
-echo "User token: $USER_TOKEN"
+echo "$USER_TOKEN"

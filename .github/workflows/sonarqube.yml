@@ -25,14 +25,21 @@ jobs:
       - name: Run SonarQube script
         run: |
           set -x
-          bash .github/scripts/run_sonarqube.sh
-          echo "::set-output name=sonar_token::$USER_TOKEN"
+          TOKEN=$(.github/scripts/run_sonarqube.sh)
+          echo $TOKEN
+          sonar_token=$(echo "TOKEN" | tail -n 1)
+          echo $SONAR_TOKEN
+          echo "SONAR_TOKEN=$SONAR_TOKEN" >> $GITHUB_ENV
         id: run-script
+
+      - name: evaluvate output of Run SonarQube script
+        run: |
+          echo ${{ steps.run-script.outputs.sonar_token }}
 
       - name: Set up SonarQube Scanner
         uses: sonarsource/sonarqube-scan-action@master
         env:
-          SONAR_TOKEN: $SONAR_TOKEN
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
           SONAR_HOST_URL: "http://localhost:9000"
         with:
           projectBaseDir: ./my-app
