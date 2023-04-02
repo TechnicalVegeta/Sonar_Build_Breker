@@ -27,9 +27,8 @@ jobs:
           chmod +x .github/scripts/run_sonarqube.sh
           TOKEN=$(.github/scripts/run_sonarqube.sh)
           echo $TOKEN
-          sonar_token=$(echo "TOKEN" | tail -n 1)
-          echo $SONAR_TOKEN
-          echo "SONAR_TOKEN=$SONAR_TOKEN" >> $GITHUB_ENV
+          sonar_token=$(echo "$TOKEN" | tail -n 1)
+          echo "SONAR_TOKEN=$sonar_token" >> $GITHUB_ENV
         id: run-script
 
       - name: evaluvate output of Run SonarQube script
