@@ -34,6 +34,7 @@ jobs:
       - name: evaluvate output of Run SonarQube script
         run: |
           echo ${{ steps.run-script.outputs.sonar_token }}
+          docker ps
 
       - name: Set up SonarQube Scanner
         uses: sonarsource/sonarqube-scan-action@master
