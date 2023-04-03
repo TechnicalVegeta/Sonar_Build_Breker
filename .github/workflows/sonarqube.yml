@@ -29,14 +29,14 @@ jobs:
           echo $TOKEN
           sonar_token=$(echo "$TOKEN" | tail -n 1)
           echo "SONAR_TOKEN=$sonar_token" >> $GITHUB_ENV
-          Docker_IP=$(docker inspect sonarqube | grep "IPAddress")
-          echo $DOCKER_IP
         id: run-script
 
       - name: evaluvate output of Run SonarQube script
         run: |
           echo ${{ steps.run-script.outputs.sonar_token }}
           docker ps
+          Docker_IP=$(docker inspect sonarqube | grep "IPAddress")
+          echo $DOCKER_IP
 
       - name: Set up SonarQube Scanner
         uses: sonarsource/sonarqube-scan-action@master

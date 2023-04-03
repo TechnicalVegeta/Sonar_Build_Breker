@@ -14,7 +14,7 @@ export SONARQUBE_PASSWORD=admin
 docker run -d --name sonarqube -p 9000:9000 sonarqube:latest
 
 # Wait for SonarQube to start
-sleep 60
+sleep 70
 
 # Login to SonarQube
 curl -u $SONARQUBE_USERNAME:$SONARQUBE_PASSWORD -X POST http://localhost:9000/api/authentication/login
