@@ -1,27 +1,27 @@
 # action.yml
-name: 'Sonar Build Breaker'
-description: 'this GitHub action is used to break the build if analysis failed'
+name: "Sonar Build Breaker"
+description: "this GitHub action is used to break the build if analysis failed"
 branding:
   icon: check
   color: blue
 inputs:
   project_key:
-    description: 'pass sonar project key'
+    description: "pass sonar project key"
     required: true
   sonar_token:
-    description: 'pass sonar token'
+    description: "pass sonar token"
     required: true
   sonar_url:
-    description: 'pass sonar root url'
+    description: "pass sonar root url"
     required: true
   sonar_branch:
-    description: 'pass sonar branch name'
+    description: "pass sonar branch name"
     required: true
 outputs:
   analysis_id:
-    description: 'sonar quality gate scan id'
+    description: "sonar quality gate scan id"
   status:
-    description: 'sonar quality gate status'
+    description: "sonar quality gate status"
 runs:
   using: "composite"
   steps:
@@ -32,6 +32,7 @@ runs:
         if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
         sudo su
         set -x
+        chmod +x ${{ github.action_path }}/SonarBuildBreaker.sh
         ${{ github.action_path }}/SonarBuildBreaker.sh --branch=${{ inputs.sonar_branch }} --sonar-token=${{ inputs.sonar_token }} --sonar-url=${{ inputs.sonar_url }} --project-key=${{ inputs.project_key }}
         elif [ "$RUNNER_OS" == "Windows" ]; then
         $GITHUB_ACTION_PATH/SonarBuildBreaker.sh --branch=${{ inputs.sonar_branch }} --sonar-token=${{ inputs.sonar_token }} --sonar-url=${{ inputs.sonar_url }} --project-key=${{ inputs.project_key }}
