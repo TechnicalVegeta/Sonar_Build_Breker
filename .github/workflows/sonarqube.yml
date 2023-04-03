@@ -35,7 +35,8 @@ jobs:
         run: |
           echo ${{ steps.run-script.outputs.sonar_token }}
           docker ps
-          Docker_IP=$(docker inspect sonarqube | grep "IPAddress")
+          docker container inspect -f '{{ .NetworkSettings.IPAddress }}' sonarqube
+          Docker_IP=$(docker container inspect -f '{{ .NetworkSettings.IPAddress }}' sonarqube)
           echo $DOCKER_IP
 
       - name: Set up SonarQube Scanner
