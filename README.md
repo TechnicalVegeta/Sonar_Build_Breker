@@ -1,4 +1,3 @@
-[![.github/workflows/action.yml](https://github.com/TechnicalVegeta/Sonar_Build_Breker/actions/workflows/action.yml/badge.svg)](https://github.com/TechnicalVegeta/Sonar_Build_Breker/actions/workflows/action.yml)
 [![SonarQube Analysis](https://github.com/TechnicalVegeta/Sonar_Build_Breker/actions/workflows/sonarqube.yml/badge.svg)](https://github.com/TechnicalVegeta/Sonar_Build_Breker/actions/workflows/sonarqube.yml)
 
 # Validating Sonar Analysis and Quality Gates   
