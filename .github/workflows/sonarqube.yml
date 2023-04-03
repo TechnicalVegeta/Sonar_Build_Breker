@@ -29,29 +29,25 @@ jobs:
           echo $TOKEN
           sonar_token=$(echo "$TOKEN" | tail -n 1)
           echo "SONAR_TOKEN=$sonar_token" >> $GITHUB_ENV
-        id: run-script
-
-      - name: evaluvate output of Run SonarQube script
-        run: |
-          echo ${{ steps.run-script.outputs.sonar_token }}
-          docker ps
-          docker container inspect -f '{{ .NetworkSettings.IPAddress }}' sonarqube
           Docker_IP=$(docker container inspect -f '{{ .NetworkSettings.IPAddress }}' sonarqube)
-          echo $DOCKER_IP
+          url="http://$Docker_IP:9000"
+          echo $url
+          echo "SONAR_URL=$url" >> $GITHUB_ENV
+        id: run-script
 
       - name: Set up SonarQube Scanner
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
-          SONAR_HOST_URL: "http://localhost:9000"
+          SONAR_HOST_URL: ${{ env.SONAR_URL }}
         with:
           projectBaseDir: ./my-app
 
-      - name: Run SonarQube scan
-        env:
-          SONAR_TOKEN: ${{ steps.run-script.outputs.sonar_token }}
-        run: |
-          cd ./my-app
-          sonar-scanner \
-            -Dsonar.host.url=http://localhost:9000 \
-            -Dsonar.login=$SONAR_TOKEN
+      # - name: Run SonarQube scan
+      #   env:
+      #     SONAR_TOKEN: ${{ steps.run-script.outputs.sonar_token }}
+      #   run: |
+      #     cd ./my-app
+      #     sonar-scanner \
+      #       -Dsonar.host.url=http://localhost:9000 \
+      #       -Dsonar.login=$SONAR_TOKEN
