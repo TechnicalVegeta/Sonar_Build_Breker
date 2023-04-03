@@ -37,7 +37,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/my-app
           mvn -B clean verify --file pom.xml
-          run: mvn sonar:sonar
+          mvn sonar:sonar
 
       # - name: Run SonarQube Scanner
       #   uses: sonarsource/sonarqube-scan-action@master
