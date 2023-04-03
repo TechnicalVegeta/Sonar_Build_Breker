@@ -32,8 +32,8 @@ jobs:
 
       - name: Build with Maven
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ env.SONAR_URL }}
         run: |
           cd $GITHUB_WORKSPACE/my-app
           mvn -B clean verify --file pom.xml
