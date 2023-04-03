@@ -39,6 +39,10 @@ jobs:
           mvn -B clean verify --file pom.xml
           mvn sonar:sonar
 
+      - name: Install dependencies
+        run: |
+          sleep 300
+
       - name: Sonar Build Breaker
         uses: ./
         id: buildbreaker
