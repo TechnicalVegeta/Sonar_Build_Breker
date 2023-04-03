@@ -73,7 +73,7 @@ function sonarAnalysisStatus() {
         Project=$(curl -s -u "${SONAR_TOKEN}": "$SONAR_URL/api/ce/activity?component=${PROJECT_KEY}" | jq '.tasks[] | "\(.branch) \(.componentName)"' | grep "$GIT_BRANCH" | head -1 | awk '{print $NF}')
         analysisProject=$(echo "$Project" | tr -d "\"\`'")
         n=$((n + 1))
-        sleep 60
+        sleep 10
     done
 
     case $analysisStatus in
