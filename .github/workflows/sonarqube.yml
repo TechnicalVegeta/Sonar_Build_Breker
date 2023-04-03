@@ -30,18 +30,20 @@ jobs:
           echo "SONAR_URL=$url" >> $GITHUB_ENV
         id: run-script
 
-      - name: Build with Maven and Run Sonar
+      - name: Build and Sonar Analysis
         env:
           SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ env.SONAR_URL }}
         run: |
           cd $GITHUB_WORKSPACE/my-app
-          mvn -B clean verify --file pom.xml
-          mvn sonar:sonar
+          mvn -B clean verify sonar:sonar --file pom.xml \
+          -Dsonar.projectKey=test_build_breaker_key \
+          -Dsonar.projectName=test_build_breaker_project \
+          -Dsonar.sourceEncoding=UTF-8 \
 
-      - name: Install dependencies
-        run: |
-          sleep 300
+      # - name: Install dependencies
+      #   run: |
+      #     sleep 300
 
       - name: Sonar Build Breaker
         uses: ./
